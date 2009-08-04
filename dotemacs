@@ -1,0 +1,393 @@
+;;; zakame.emacs --- My Emacs customizations
+;; Copyright (C) 2005, 2006, 2007, 2008  Zak B. Elep
+
+;;;_* Package description
+
+;; Author	:	Zak B. Elep ( zakame@zakame.net )
+;; Date Created	:	Thu Sep 29 12:29:42 UTC 2005
+;; Purpose	:	Set my personal customizations for the One True Editor.
+;; Keywords	:	environment, customization
+;; License	:	GNU General Public License (GPL), version 2
+
+;; This file is NOT part of GNU Emacs.
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation; either version 2 of the License,
+;; or (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful, but
+;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program; if not, write to the Free Software
+;; Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+
+
+;;;_* Commentary
+
+;; `zakame.emacs' contains the special customizations made by Zak
+;; B. Elep ( zakame@zakame.net ) for his own use.  It includes certain
+;; customizations for the X interface, font-locking, outlining support,
+;; printing, and programming conveniences.  It also starts the `gnuserv'
+;; or `server' Emacs editing server if it is available.
+;;
+;; This new version is tailored to be more portable (e.g. being able to
+;; run on a Mac OS X, Debian, and OpenBSD.)
+
+;;;_ + Usage
+
+;; Rename this file as .emacs , and put it inside your home directory.
+;; Emacs will then run it at startup by default, unless Emacs is invoked
+;; as `emacs -q'.
+
+;;;_* Code
+
+;;;_ + General setup
+
+;; Set my full name and email address
+(setq-default user-full-name "Zak B. Elep"
+              user-mail-address "zakame@zakame.net")
+
+;; Set my default colors
+(setq default-frame-alist
+;;       '((background-color . "Gray94")
+      '((background-color . "LemonChiffon")
+        (foreground-color . "Black")
+        (cursor-color . "Green")
+;;	(font . "-xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1")
+;;      (font . "-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1")
+;;      (font . "-bitstream-bitstream vera sans mono-medium-r-normal--12-120-75-75-m-0-iso10646-1")
+        (user-position t)))
+
+;; If we are using Emacs 22 in Debian, set things up accordingly and use
+;; packages from Debian:
+(let ((startup-file "/usr/share/emacs21/site-lisp/debian-startup.elc"))
+  (if (and (or (not (fboundp 'debian-startup))
+               (not (boundp 'debian-emacs-flavor)))
+           (file-readable-p startup-file))
+      (progn
+        (load-file startup-file)
+        (setq debian-emacs-flavor 'emacs21)
+        (debian-startup debian-emacs-flavor)
+        (mapcar '(lambda (f)
+                   (and (not (string= (substring f -3) "/.."))
+                        (file-directory-p f)
+                        (add-to-list 'load-path f)))
+                (directory-files "/usr/share/emacs/site-lisp" t)))))
+
+;; Add custom elisp code from ~/elisp to the load-path.
+(if (fboundp 'normal-top-level-add-subdirs-to-load-path)
+    (let* ((elisp (expand-file-name "~/elisp"))
+           (default-directory elisp))
+      (if (file-directory-p elisp)
+	  (progn
+	    (setq load-path (cons elisp load-path))
+	    (normal-top-level-add-subdirs-to-load-path)))))
+
+;; Add extra PATHs for binaries, especially for Mac OS X/pkgsrc
+(let* ((pkgsrc-bin "/Volumes/NetBSD/pkg/bin"))
+  (if (file-directory-p pkgsrc-bin)
+      (progn (setenv "PATH" (concat (getenv "PATH") ":" pkgsrc-bin))
+             (setq exec-path (append exec-path (list pkgsrc-bin))))))
+
+;; Add extra enviromnent vars supplied by Perl's local::lib
+(let* ((perl5 (expand-file-name "~/perl5")))
+  (if (file-directory-p perl5)
+      (with-temp-buffer
+        (call-process "perl" nil t nil
+                      (concat "-I" (expand-file-name "~/perl5/lib/perl5"))
+                      "-Mlocal::lib")
+        (goto-char (point-min))
+        (while (re-search-forward "\\([0-9A-Z_]+\\)=\"\\(.*\\)\"" nil t)
+          (setenv (match-string 1) (substitute-in-file-name (match-string 2))))
+        (setq exec-path (cons (expand-file-name "~/perl5/bin") exec-path)))))
+
+(setq enable-local-eval t)              ; Tell Emacs to obey variables
+                                        ; set by the files it reads
+(display-time)                          ; Display the time on modeline
+(setq visible-bell t)                   ; Blink the screen instead of
+                                        ; beeping
+(mwheel-install)                        ; Enable wheel mouse support
+(set-language-environment "UTF-8")      ; Set my default language
+                                        ; environment
+(scroll-bar-mode -1)                    ; Remove the tool bar ...
+(tool-bar-mode -1)                      ; ... and the scroll bar in X
+(icomplete-mode 1)                      ; Enable IComplete mode
+(iswitchb-mode 1)                       ; Enable ISwitchB mode
+(windmove-default-keybindings)          ; Enable windmove
+(auto-image-file-mode 1)                ; Show images as images, not as
+                                        ; semi-random bits
+
+;; Enable File-Name Shadows (currently only available in Emacs 22
+(if (>= emacs-major-version 22)
+    (file-name-shadow-mode 1))
+
+
+;;;_ + Editing
+
+;; I want global font-locking
+(setq font-lock-maximum-size (* 70 1024)) ; buffers should be at most
+                                          ; 250K to be fontified
+(global-font-lock-mode 1)
+(setq font-lock-support-mode 'jit-lock-mode) ; Just In Time font-locking
+(setq font-lock-maximum-decoration t)
+
+(add-hook 'text-mode-hook 'turn-on-auto-fill) ; Turn on auto-fill on all
+                                              ; major modes
+(setq-default fill-column 72)                 ; Set default fill-column
+(transient-mark-mode 1)                 ; Show highlight when selecting
+                                        ; regions
+(line-number-mode 1)                    ; Show line number ...
+(column-number-mode 1)                  ; ... and column number on
+                                        ; modeline
+(show-paren-mode 1)                     ; Automatically makes the
+                                        ; matching parenthesis stand out
+                                        ; in color
+(mouse-avoidance-mode 'cat-and-mouse) ; This moves the mouse pointer out
+                                      ; of my way when I type
+(temp-buffer-resize-mode 1)             ; Temporary windows should not
+                                        ; get into our way
+(auto-compression-mode 1)               ; Load Auto-(De)Compression Mode
+(setq next-line-add-newlines nil)       ; This disables down-arrow and
+                                        ; C-n at the end of a buffer
+                                        ; from adding a new line to that
+                                        ; buffer
+
+(setq auto-save-timeout 15              ; Auto-save after 15 sec of
+                                        ; idleness
+      require-final-newline t; Always add a newline to file's end
+      search-highlight t                ; Highlight search strings
+      compilation-window-height 10      ; Set a small window for
+                                        ; compiles
+      compilation-ask-about-save nil)
+
+;; Enable some commands I need.
+(put 'narrow-to-region 'disabled nil)   ; Restrict editing to narrowed
+                                        ; region
+(put 'downcase-region 'disabled nil)
+(put 'upcase-region 'disabled nil)
+
+;; Use AllOut mode
+(require 'allout)
+(if (>= emacs-major-version 22)
+    (allout-init t)
+  (outline-init t))
+
+;; Use Gnus as a mail-user-agent
+(setq mail-user-agent 'gnus-user-agent)
+
+;; Use `gnuserv' if it is available, and start it up.  Set `$EDITOR' to
+;; `gnuclient', and use Emacs at any instance where `$EDITOR' is needed.
+(condition-case err
+    (progn
+      (require 'gnuserv-compat)
+      (gnuserv-start))
+  (error
+   (message "Could not load gnuserv: %s" (cdr err))))
+
+;; Else, use Emacs 22's own server, and set `$EDITOR' to `emacsclient'.
+(condition-case err
+    (progn
+      (require 'server)
+      (server-start))
+  (error
+   (message "Could not load server: %s" (cdr err))))
+
+;; For TRAMP, add an 'ssh2222' hop for ssh connections on port 2222.
+;; (require 'tramp)
+;; (add-to-list 'tramp-multi-connection-function-alist
+;;              '("ssh2222" tramp-multi-connect-rlogin "ssh %h -l %u -p 2222%n"))
+
+;; Rebind `dabbrev-expand' to `hippie-expand' for adaptive auto-completion.
+(eval-after-load "dabbrev"
+  '(defalias 'dabbrev-expand 'hippie-expand))
+
+;; Use BoxQuote
+(condition-case err
+    (progn
+      (require 'boxquote))
+  (error
+   (message "Could not load boxquote: %s" (cdr err))))
+
+;;;_ + Programming
+
+;; Automatic online help for library functions
+(autoload 'find-tag-tag "etags")
+(autoload 'Info-find-node "info")
+(defun libc-help (arg)
+  (interactive (list (find-tag-tag "C library topic: ")))
+  (Info-find-node "libc" arg))
+
+;; Enable ElDoc for automatic documentation of elisp functions
+(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
+(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
+;; Enable magic indents and newlines at C/C++ files
+(add-hook 'c-mode-common-hook
+          '(lambda () (c-toggle-auto-state 1)))
+
+;; Set my C indentation mode to cc-mode
+(setq c-default-style
+      '((java-mode . "java")
+        (c++-mode . "stroustrup")
+        (other . "gnu")))
+
+;; Always indent using spaces, no tabs
+(setq-default indent-tabs-mode nil)
+
+;; Use CPerl mode instead of regular Perl mode upon editing Perl files
+(mapc
+ (lambda (pair)
+   (if (eq (cdr pair) 'perl-mode)
+       (setcdr pair 'cperl-mode)))
+ (append auto-mode-alist interpreter-mode-alist))
+(setq cperl-indent-level 4
+      cperl-close-paren-offset -4
+      cperl-continued-statement-offset 4
+      cperl-indent-parens-as-block t
+      cperl-tab-always-indent t)
+
+;; Bind cperl-perldoc to perldoc
+(defalias 'perldoc 'cperl-perldoc)
+(defalias 'perldoc-at-point 'cperl-perldoc-at-point)
+
+;; Use Devel::PerlySense to enhance Perl editing modes
+(global-unset-key "\C-o")
+(setq ps/key-prefix "\C-o")
+(setq ps/load-flymake t)
+(setq ps/external-dir (shell-command-to-string "perly_sense external_dir"))
+(if (string-match "Devel.PerlySense.external" ps/external-dir)
+    (progn
+      (message
+       "PerlySense elisp files at (%s) according to perly_sense, loading..."
+       ps/external-dir)
+      (setq load-path (cons
+		       (expand-file-name
+			(format "%s/%s" ps/external-dir "emacs"))
+		       load-path))
+      (load "perly-sense"))
+  (message "Could not identify PerlySense install directory.
+Is Devel::PerlySense installed properly?
+Does 'perly_sense external_dir' give you a proper directory? (%s)" ps/external-dir))
+
+;; Use FlyMake to enhance Devel::PerlySense
+(require 'flymake)
+(setq ps/load-flymake t)
+(setq flymake-no-changes-timeout 9999)
+(setq flymake-start-syntax-check-on-newline nil)
+
+;; This loads generic modes which support e.g batch files
+(require 'generic-x)
+
+;; This turns on develock if it is available
+(condition-case err
+    (progn
+      (cond ((featurep 'xemacs)
+             (require 'develock)
+             ;; `turn-on-develock' is equivalent to `turn-on-font-lock',
+             ;;  except that it does not highlight the startup screen.
+             (add-hook 'lisp-interaction-mode-hook 'turn-on-develock)
+             (add-hook 'mail-setup-hook 'turn-on-font-lock))
+            ((>= emacs-major-version 20)
+             (require 'develock)
+             (global-font-lock-mode t))))
+  (error
+   (message "Could not load develock: %s " (cdr err))))
+
+;; I want a better Scheme mode
+(autoload 'scheme-mode
+  "cmuscheme" "Major mode for Scheme." t)
+(autoload 'run-scheme
+  "cmuscheme" "Switch to interactive Scheme buffer." t)
+(setq scheme-program-name "mit-scheme")
+
+;; Ruby mode
+(condition-case err
+    (progn
+      (require 'ruby-mode)
+      (setq auto-mode-alist (append (list (cons "\\.rb\\'" 'ruby-mode))
+                                    auto-mode-alist)))
+  (error
+   (message "Could not load ruby-mode: %s" (cdr err))))
+
+;; VC-Git
+(condition-case err
+    (progn
+      (require 'vc-git)
+      (when (featurep 'vc-git)
+        (add-to-list 'vc-handled-backends 'git))
+      (require 'git)
+      (autoload 'git-blame-mode "git-blame"
+        "Minor mode for incremental blame for Git." t))
+  (error
+   (message "Could not load git: %s" (cdr err))))
+
+
+;;;_ + Network Programs
+
+;; Set up rcirc: keep input line at the bottom, enable channel tracking,
+;; add /away and /reconnect commands.
+(require 'rcirc)
+(rcirc-track-minor-mode)
+(add-hook 'rcirc-mode-hook
+          (lambda ()
+            (set (make-local-variable 'scroll-conservatively)
+                 8192)))
+(eval-after-load 'rcirc
+  '(defun-rcirc-command all (input)
+     "Run the arguments as a command for all connections."
+     (interactive "s")
+     (let ((buffers (mapcar 'process-buffer (rcirc-process-list))))
+       (dolist (buf buffers)
+         (with-current-buffer buf
+           (goto-char (point-max))
+           (insert "/" input)
+           (rcirc-send-input))))))
+(eval-after-load 'rcirc
+  '(defun-rcirc-command reconnect (arg)
+     "Reconnect the server process."
+     (interactive "i")
+     (unless process
+       (error "There is no process for this target"))
+     (let* ((server (car (process-contact process)))
+            (port (process-contact process :service))
+            (nick (rcirc-nick process))
+            channels query-buffers)
+       (dolist (buf (buffer-list))
+         (with-current-buffer buf
+           (when (eq process (rcirc-buffer-process))
+             (remove-hook 'change-major-mode-hook
+                          'rcirc-change-major-mode-hook)
+             (if (rcirc-channel-p rcirc-target)
+                 (setq channels (cons rcirc-target channels))
+               (setq query-buffers (cons buf query-buffers))))))
+       (delete-process process)
+       (rcirc-connect server port nick
+                      rcirc-default-user-name
+                      rcirc-default-user-full-name
+                      channels))))
+
+
+;;;_* Local emacs vars
+
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(canlock-password "bd7748ae346d604e7544db36fd3d5ee66892393f"))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )
+;; Local variables:
+;; allout-layout: (* 0 : )
+;; End:
+
+;;; zakame.emacs ends here
