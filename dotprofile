@@ -11,3 +11,5 @@ export http_proxy ftp_proxy
 
 PKG_PATH=http://obsd.cec.mtu.edu/pub/OpenBSD/snapshots/packages/`machine -a`/
 export PKG_PATH
+
+eval $(perl -I$HOME/perl5/lib/perl5 -Mlocal::lib)
