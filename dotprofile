@@ -9,5 +9,5 @@ http_proxy=http://proxy.skyinet.net:3128
 ftp_proxy=$http_proxy
 export http_proxy ftp_proxy
 
-PKG_PATH=http://ftp.eu.openbsd.org/pub/OpenBSD/snapshots/packages/`machine -a`/
+PKG_PATH=http://obsd.cec.mtu.edu/pub/OpenBSD/snapshots/packages/`machine -a`/
 export PKG_PATH
