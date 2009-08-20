@@ -120,6 +120,7 @@ AddToMenu Utilities     "Utilities" Title
 +                       "Editres"       Exec exec editres
 +			""		Nop
 +			"Firefox"	Exec exec mozilla-firefox
++                       "Thunderbird"   Exec exec mozilla-thunderbird
 +			"Emacs"		Exec exec emacs
 +                       "Pidgin"        Exec exec pidgin
 +                       "GQview"        Exec exec gqview
