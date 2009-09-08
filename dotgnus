@@ -2,6 +2,7 @@
 
 (setq gnus-select-method
       '(nntp "news.eternal-september.org"
+             (nntp-authinfo-file "~/.authinfo.gpg")
              (nntp-port-number 563)
              (nntp-open-connection-function nntp-open-tls-stream)))
       ;; gnus-secondary-select-methods
