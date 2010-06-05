@@ -94,8 +94,11 @@
              (setq exec-path (append exec-path (list pkgsrc-bin))))))
 
 ;; Add extra enviromnent vars supplied by Perl's local::lib
-(let* ((perl5 (expand-file-name "~/perl5")))
-  (if (file-directory-p perl5)
+;; Check if perlbrew exists though, and use that instead of local::lib
+(let* ((perl5 (expand-file-name "~/perl5"))
+       (perlbrew (expand-file-name "~/perl5/perlbrew")))
+  (if (and (file-directory-p perl5)
+           (not (file-directory-p perlbrew)))
       (with-temp-buffer
         (call-process "perl" nil t nil
                       (concat "-I" (expand-file-name "~/perl5/lib/perl5"))
@@ -103,7 +106,17 @@
         (goto-char (point-min))
         (while (re-search-forward "\\([0-9A-Z_]+\\)=\"\\(.*\\)\"" nil t)
           (setenv (match-string 1) (substitute-in-file-name (match-string 2))))
-        (setq exec-path (cons (expand-file-name "~/perl5/bin") exec-path)))))
+        (setq exec-path (cons (expand-file-name "~/perl5/bin") exec-path))))
+  (if (file-directory-p perlbrew)
+      (progn (setenv "PATH"
+                     (concat perlbrew "/bin" ":"
+                             perlbrew "/perls/current/bin" ":"
+                             (getenv "PATH")))
+             (setq exec-path
+                   (nconc
+                    (list (concat perlbrew "/bin")
+                          (concat perlbrew "/perls/current/bin"))
+                    exec-path)))))
 
 (setq enable-local-eval t)              ; Tell Emacs to obey variables
                                         ; set by the files it reads
