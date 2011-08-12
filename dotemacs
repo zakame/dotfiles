@@ -64,9 +64,9 @@
     (let* ((elisp (expand-file-name "~/elisp"))
            (default-directory elisp))
       (if (file-directory-p elisp)
-	  (progn
-	    (setq load-path (cons elisp load-path))
-	    (normal-top-level-add-subdirs-to-load-path)))))
+          (progn
+            (setq load-path (cons elisp load-path))
+            (normal-top-level-add-subdirs-to-load-path)))))
 
 (setq enable-local-eval t)              ; Tell Emacs to obey variables
                                         ; set by the files it reads
@@ -224,13 +224,14 @@
        "PerlySense elisp files at (%s) according to perly_sense, loading..."
        ps/external-dir)
       (setq load-path (cons
-		       (expand-file-name
-			(format "%s/%s" ps/external-dir "emacs"))
-		       load-path))
+                       (expand-file-name
+                        (format "%s/%s" ps/external-dir "emacs"))
+                       load-path))
       (load "perly-sense"))
   (message "Could not identify PerlySense install directory.
 Is Devel::PerlySense installed properly?
-Does 'perly_sense external_dir' give you a proper directory? (%s)" ps/external-dir))
+Does 'perly_sense external_dir' give you a proper directory? (%s)"
+           ps/external-dir))
 
 ;; Use FlyMake to enhance Devel::PerlySense
 (require 'flymake)
