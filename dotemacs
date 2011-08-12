@@ -1,5 +1,5 @@
 ;;; zakame.emacs --- My Emacs customizations
-;; Copyright (C) 2005, 2006, 2007, 2008  Zak B. Elep
+;; Copyright (C) 2005-2011  Zak B. Elep
 
 ;;;_* Package description
 
@@ -57,26 +57,7 @@
       '((background-color . "LemonChiffon")
         (foreground-color . "Black")
         (cursor-color . "Green")
-;;	(font . "-xos4-terminus-medium-r-normal--16-160-72-72-c-80-iso10646-1")
-;;      (font . "-xos4-terminus-medium-r-normal--20-200-72-72-c-100-iso10646-1")
-;;      (font . "-bitstream-bitstream vera sans mono-medium-r-normal--12-120-75-75-m-0-iso10646-1")
         (user-position t)))
-
-;; If we are using Emacs 22 in Debian, set things up accordingly and use
-;; packages from Debian:
-(let ((startup-file "/usr/share/emacs21/site-lisp/debian-startup.elc"))
-  (if (and (or (not (fboundp 'debian-startup))
-               (not (boundp 'debian-emacs-flavor)))
-           (file-readable-p startup-file))
-      (progn
-        (load-file startup-file)
-        (setq debian-emacs-flavor 'emacs21)
-        (debian-startup debian-emacs-flavor)
-        (mapcar '(lambda (f)
-                   (and (not (string= (substring f -3) "/.."))
-                        (file-directory-p f)
-                        (add-to-list 'load-path f)))
-                (directory-files "/usr/share/emacs/site-lisp" t)))))
 
 ;; Add custom elisp code from ~/elisp to the load-path.
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
@@ -86,37 +67,6 @@
 	  (progn
 	    (setq load-path (cons elisp load-path))
 	    (normal-top-level-add-subdirs-to-load-path)))))
-
-;; Add extra PATHs for binaries, especially for Mac OS X/pkgsrc
-(let* ((pkgsrc-bin "/Volumes/NetBSD/pkg/bin"))
-  (if (file-directory-p pkgsrc-bin)
-      (progn (setenv "PATH" (concat (getenv "PATH") ":" pkgsrc-bin))
-             (setq exec-path (append exec-path (list pkgsrc-bin))))))
-
-;; Add extra enviromnent vars supplied by Perl's local::lib
-;; Check if perlbrew exists though, and use that instead of local::lib
-(let* ((perl5 (expand-file-name "~/perl5"))
-       (perlbrew (expand-file-name "~/perl5/perlbrew")))
-  (if (and (file-directory-p perl5)
-           (not (file-directory-p perlbrew)))
-      (with-temp-buffer
-        (call-process "perl" nil t nil
-                      (concat "-I" (expand-file-name "~/perl5/lib/perl5"))
-                      "-Mlocal::lib")
-        (goto-char (point-min))
-        (while (re-search-forward "\\([0-9A-Z_]+\\)=\"\\(.*\\)\"" nil t)
-          (setenv (match-string 1) (substitute-in-file-name (match-string 2))))
-        (setq exec-path (cons (expand-file-name "~/perl5/bin") exec-path))))
-  (if (file-directory-p perlbrew)
-      (progn (setenv "PATH"
-                     (concat perlbrew "/bin" ":"
-                             perlbrew "/perls/current/bin" ":"
-                             (getenv "PATH")))
-             (setq exec-path
-                   (nconc
-                    (list (concat perlbrew "/bin")
-                          (concat perlbrew "/perls/current/bin"))
-                    exec-path)))))
 
 (setq enable-local-eval t)              ; Tell Emacs to obey variables
                                         ; set by the files it reads
@@ -171,7 +121,7 @@
 
 (setq auto-save-timeout 15              ; Auto-save after 15 sec of
                                         ; idleness
-      require-final-newline t; Always add a newline to file's end
+      require-final-newline t           ; Always add a newline to file's end
       search-highlight t                ; Highlight search strings
       compilation-window-height 10      ; Set a small window for
                                         ; compiles
@@ -208,11 +158,6 @@
       (server-start))
   (error
    (message "Could not load server: %s" (cdr err))))
-
-;; For TRAMP, add an 'ssh2222' hop for ssh connections on port 2222.
-;; (require 'tramp)
-;; (add-to-list 'tramp-multi-connection-function-alist
-;;              '("ssh2222" tramp-multi-connect-rlogin "ssh %h -l %u -p 2222%n"))
 
 ;; Rebind `dabbrev-expand' to `hippie-expand' for adaptive auto-completion.
 (eval-after-load "dabbrev"
@@ -388,6 +333,7 @@ Does 'perly_sense external_dir' give you a proper directory? (%s)" ps/external-d
 ;;;_* Local emacs vars
 
 ;; Local variables:
+;; mode: emacs-lisp
 ;; allout-layout: (* 0 : )
 ;; End:
 
