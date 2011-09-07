@@ -285,6 +285,19 @@ Does 'perly_sense external_dir' give you a proper directory? (%s)"
   (error
    (message "Could not load git: %s" (cdr err))))
 
+;; nXhtml
+(load "~/src/nxhtml/autostart.el")
+
+;; HTML5 support for nxml-mode
+(add-to-list 'load-path "~/src/html5-el")
+(eval-after-load "rng-loc"
+  '(add-to-list 'rng-schema-locating-files "~/src/html5-el/schemas.xml"))
+
+;; Emacs Code Browser
+(add-to-list 'load-path "~/src/ecb")
+(require 'ecb)
+(setq ecb-options-version "2.40")
+
 
 ;;;_ + Network Programs
 
