@@ -53,6 +53,12 @@ elif [ -d $HOME/perl5/perlbrew ]; then
     source $HOME/perl5/perlbrew/etc/bashrc
 fi
 
+# add histfile settings if there's no antigen
+if [ -z $HISTFILE ]; then
+    HISTFILE=~/.zsh_history
+    HISTSIZE=1000
+    SAVEHIST=1000
+fi
 setopt appendhistory autocd beep extendedglob nomatch notify
 bindkey -e
 zstyle :compinstall filename $HOME/.zshrc
