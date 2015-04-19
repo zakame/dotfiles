@@ -1,0 +1,26 @@
+script_line1 = use strict
+script_line2 = use warnings
+
+[AutoRefresh]
+[Interrupt]
+[FancyPrompt]
+[DataPrinter]
+[Colors]
+[ReadLine]
+[Hints]
+[Packages]
+[LexicalPersistence]
+[ResultCache]
+[Autocomplete::Packages]
+[Autocomplete::Lexicals]
+[Autocomplete::Functions]
+[Autocomplete::Globals]
+[Autocomplete::Methods]
+[Autocomplete::Commands]
+
+[Editor]
+editor = emacsclient
+
+[LoadClass]
+[Timer]
+[TypeTiny]

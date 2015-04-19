@@ -1,0 +1,9 @@
+!! Emacs settings
+Emacs*Background: Black
+Emacs*Foreground: Grey
+Emacs*cursorColor: Green
+Emacs.Font: Terminus-8
+
+!! Local configuration
+
+#include ".Xdefaults.local"

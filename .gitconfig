@@ -1,0 +1,5 @@
+[user]
+	name = Zak B. Elep
+	email = zakame@zakame.net
+[include]
+        path = ~/.gitconfig.local
