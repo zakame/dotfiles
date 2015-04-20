@@ -15,7 +15,6 @@ docker
 emacs
 git
 golang
-gpg-agent
 history
 history-substring-search
 jsontools
@@ -33,6 +32,9 @@ tmux
 torrent
 vim-interaction
 EOF
+    if [ -x /usr/bin/gpg-agent ]; then
+        antigen bundle gpg-agent
+    fi
     bindkey -M emacs '^P' history-substring-search-up
     bindkey -M emacs '^N' history-substring-search-down
 fi
