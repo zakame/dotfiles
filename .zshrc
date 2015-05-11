@@ -13,6 +13,7 @@ cp
 cpanm
 docker
 emacs
+frontend-search
 git
 golang
 history
@@ -31,6 +32,7 @@ systemadmin
 tmux
 torrent
 vim-interaction
+web-search
 EOF
     if [ -x /usr/bin/gpg-agent ]; then
         antigen bundle gpg-agent
