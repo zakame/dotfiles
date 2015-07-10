@@ -12,6 +12,7 @@ colored-man
 cp
 cpanm
 docker
+docker-compose
 emacs
 frontend-search
 git
