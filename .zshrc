@@ -8,7 +8,7 @@ bower
 bundler
 cabal
 coffee
-colored-man
+colored-man-pages
 cp
 cpanm
 docker

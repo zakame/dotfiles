@@ -3,3 +3,5 @@
 	email = zakame@zakame.net
 [include]
         path = ~/.gitconfig.local
+[color]
+	ui = auto
