@@ -75,7 +75,7 @@ autoload -U select-word-style
 select-word-style bash
 
 function dta() {
-    wget -O - $1 | grep -Eo 'i.4cdn.org/[^"]+' | uniq | xargs wget
+    wget -O - $1 | grep -Eo 'i.4cdn.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
 }
 
 # load any local configuration
