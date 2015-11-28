@@ -4,27 +4,36 @@ if [ -r $HOME/src/antigen/antigen.zsh ]; then
     antigen use oh-my-zsh
     antigen bundles <<EOF
 zsh-users/zsh-syntax-highlighting
+adb
+aws
 bower
 bundler
 cabal
 coffee
 colored-man-pages
+composer
 cp
 cpanm
 docker
 docker-compose
 emacs
 frontend-search
+gem
 git
 golang
+gradle
 history
 history-substring-search
 jsontools
+laravel5
+lein
 node
 npm
 nyan
 perl
+pip
 pyenv
+python
 rails
 rake
 rake-fast
