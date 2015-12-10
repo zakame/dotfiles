@@ -5,7 +5,6 @@ if [ -r $HOME/src/antigen/antigen.zsh ]; then
     antigen bundles <<EOF
 zsh-users/zsh-syntax-highlighting
 adb
-aws
 bower
 bundler
 cabal
