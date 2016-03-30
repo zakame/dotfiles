@@ -5,3 +5,5 @@
         path = ~/.gitconfig.local
 [color]
 	ui = auto
+[merge]
+        conflictStyle = diff3
