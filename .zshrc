@@ -7,6 +7,7 @@ zsh-users/zsh-syntax-highlighting
 zsh-users/zsh-history-substring-search
 zsh-users/zsh-completions
 zsh-users/zsh-autosuggestions
+zsh-users/zaw
 adb
 bower
 bundler
@@ -52,6 +53,11 @@ EOF
     bindkey -M emacs '^N' history-substring-search-down
     bindkey '^M' autosuggest-execute
     bindkey '^G' autosuggest-clear
+    bindkey '^R' zaw-history
+
+    zstyle :filter-select rotate-list yes
+    zstyle :filter-select case-insensitive yes
+    zstyle :filter-select hist-find-no-dups yes
 fi
 
 # load liquidprompt if available
