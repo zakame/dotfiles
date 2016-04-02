@@ -4,6 +4,9 @@ if [ -r $HOME/src/antigen/antigen.zsh ]; then
     antigen use oh-my-zsh
     antigen bundles <<EOF
 zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
 adb
 bower
 bundler
@@ -22,7 +25,6 @@ git
 golang
 gradle
 history
-history-substring-search
 jsontools
 laravel5
 lein
@@ -48,6 +50,8 @@ EOF
     fi
     bindkey -M emacs '^P' history-substring-search-up
     bindkey -M emacs '^N' history-substring-search-down
+    bindkey '^M' autosuggest-execute
+    bindkey '^G' autosuggest-clear
 fi
 
 # load liquidprompt if available
