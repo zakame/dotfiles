@@ -37,6 +37,10 @@ zplug "zsh-users/zaw"
 
 zplug "nojhan/liquidprompt", at:develop
 
+zplug "lib/misc", from:oh-my-zsh, ignore:oh-my-zsh.sh, nice:10
+zplug "lib/termsupport", from:oh-my-zsh, ignore:oh-my-zsh.sh, nice:10
+zplug "lib/theme-and-appearance", from:oh-my-zsh, ignore:oh-my-zsh.sh, nice:10
+
 zplug "b4b4r07/zplug"
 
 if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
@@ -74,8 +78,6 @@ setopt histignoredups sharehistory
 function dta() {
     wget -O - $1 | grep -Eo 'i.4cdn.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
 }
-
-alias ls="ls --color"
 
 if [ -d $HOME/bin ]; then
     PATH=$HOME/bin:$PATH
