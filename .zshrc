@@ -1,104 +1,84 @@
-# load antigen if it is available
-if [ -r $HOME/src/antigen/antigen.zsh ]; then
-    source $HOME/src/antigen/antigen.zsh
-    antigen use oh-my-zsh
-    antigen bundles <<EOF
-zsh-users/zsh-syntax-highlighting
-zsh-users/zsh-history-substring-search
-zsh-users/zsh-completions
-zsh-users/zsh-autosuggestions
-zsh-users/zaw
-adb
-bower
-bundler
-cabal
-coffee
-colored-man-pages
-composer
-cp
-cpanm
-docker
-docker-compose
-emacs
-frontend-search
-gem
-git
-golang
-gradle
-history
-jsontools
-laravel5
-lein
-node
-npm
-nyan
-perl
-pip
-pyenv
-python
-rails
-rake
-rake-fast
-rbenv
-systemadmin
-tmux
-torrent
-vim-interaction
-web-search
-EOF
-    if [ -x /usr/bin/gpg-agent ]; then
-        antigen bundle gpg-agent
-    fi
-    bindkey -M emacs '^P' history-substring-search-up
-    bindkey -M emacs '^N' history-substring-search-down
-    bindkey '^M' autosuggest-execute
-    bindkey '^G' autosuggest-clear
-    bindkey '^R' zaw-history
-
-    zstyle :filter-select rotate-list yes
-    zstyle :filter-select case-insensitive yes
-    zstyle :filter-select hist-find-no-dups yes
-fi
-
-# load liquidprompt if available
-if [ -r $HOME/src/liquidprompt/liquidprompt ]; then
-    source $HOME/src/liquidprompt/liquidprompt
-elif [ -r $HOME/src/antigen/antigen.zsh ]; then
-    # or fall back to antigen theme
-    antigen theme minimal
-fi
-
-# prefer plenv to perlbrew if both are found
-if [ -d $HOME/.plenv ]; then
-    PATH=$HOME/.plenv/bin:$PATH
-    eval "$(plenv init -)"
-elif [ -d $HOME/perl5/perlbrew ]; then
-    source $HOME/perl5/perlbrew/etc/bashrc
-fi
-
-# add histfile settings if there's no antigen
-if [ -z $HISTFILE ]; then
-    HISTFILE=~/.zsh_history
-    HISTSIZE=1000
-    SAVEHIST=1000
-fi
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 setopt appendhistory autocd beep extendedglob nomatch notify
 bindkey -e
-zstyle :compinstall filename $HOME/.zshrc
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select=1
+zstyle ':completion:*' use-compctl true
+zstyle :compinstall filename ${ZDOTDIR:-$HOME}/.zshrc
 
 autoload -Uz compinit
 compinit
+# End of lines added by compinstall
 
 autoload -U select-word-style
 select-word-style bash
+
+# Set up zplug
+[[ -d ~/.zplug ]] || {
+    curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
+    source ~/.zplug/zplug && zplug update --self
+}
+
+source ~/.zplug/zplug
+
+zplug "zsh-users/zsh-syntax-highlighting"
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zaw"
+
+zplug "nojhan/liquidprompt", at:develop
+
+zplug "b4b4r07/zplug"
+
+if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
+    source ${ZDOTDIR:-$HOME}/.zshrc.local
+fi
+
+if ! zplug check --verbose; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    else
+        echo
+    fi
+fi
+
+zplug load
+
+bindkey -M emacs '^P' history-substring-search-up
+bindkey -M emacs '^N' history-substring-search-down
+
+bindkey '^M' autosuggest-execute
+bindkey '^G' autosuggest-clear
+
+bindkey '^R' zaw-history
+
+zstyle :filter-select rotate-list yes
+zstyle :filter-select case-insensitive yes
+zstyle :filter-select hist-find-no-dups yes
+
+zstyle ':completion:*' rehash true
+
+setopt completealiases
+setopt histignoredups sharehistory
 
 function dta() {
     wget -O - $1 | grep -Eo 'i.4cdn.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
 }
 
-# load any local configuration
-if [ -f $HOME/.zshrc.local ]; then
-    source $HOME/.zshrc.local
+alias ls="ls --color"
+
+if [ -d $HOME/bin ]; then
+    PATH=$HOME/bin:$PATH
 fi
 
 typeset -U path
