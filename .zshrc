@@ -37,9 +37,9 @@ zplug "zsh-users/zaw"
 
 zplug "nojhan/liquidprompt", at:develop
 
-zplug "lib/misc", from:oh-my-zsh, ignore:oh-my-zsh.sh, nice:10
-zplug "lib/termsupport", from:oh-my-zsh, ignore:oh-my-zsh.sh, nice:10
-zplug "lib/theme-and-appearance", from:oh-my-zsh, ignore:oh-my-zsh.sh, nice:10
+zplug "lib/misc", from:oh-my-zsh, ignore:oh-my-zsh.sh
+zplug "lib/termsupport", from:oh-my-zsh, ignore:oh-my-zsh.sh
+zplug "lib/theme-and-appearance", from:oh-my-zsh, ignore:oh-my-zsh.sh
 
 zplug "b4b4r07/zplug"
 
