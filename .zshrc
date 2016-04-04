@@ -18,6 +18,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+ttyctl -f
+
 autoload -U select-word-style
 select-word-style bash
 
