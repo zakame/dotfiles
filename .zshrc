@@ -35,7 +35,10 @@ zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zaw"
+
+zplug "junegunn/fzf-bin", as:command, from:gh-r, of:"*linux_amd64*", file:fzf
+zplug "junegunn/fzf", as:command, of:"bin/fzf-tmux", file:fzf-tmux
+zplug "junegunn/fzf", of:"shell/*.zsh"
 
 zplug "nojhan/liquidprompt", at:develop
 
@@ -65,8 +68,6 @@ bindkey -M emacs '^N' history-substring-search-down
 
 bindkey '^M' autosuggest-execute
 bindkey '^G' autosuggest-clear
-
-bindkey '^R' zaw-history
 
 zstyle :filter-select rotate-list yes
 zstyle :filter-select case-insensitive yes
