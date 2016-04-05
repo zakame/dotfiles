@@ -63,17 +63,19 @@ fi
 
 zplug load
 
-FZF_DEFAULT_OPTS="--multi --reverse --inline-info"
+if zplug check junegunn/fzf-bin; then
+    FZF_DEFAULT_OPTS="--multi --reverse --inline-info"
+fi
 
-bindkey -M emacs '^P' history-substring-search-up
-bindkey -M emacs '^N' history-substring-search-down
+if zplug check zsh-users/zsh-history-substring-search; then
+    bindkey -M emacs '^P' history-substring-search-up
+    bindkey -M emacs '^N' history-substring-search-down
+fi
 
-bindkey '^M' autosuggest-execute
-bindkey '^G' autosuggest-clear
-
-zstyle :filter-select rotate-list yes
-zstyle :filter-select case-insensitive yes
-zstyle :filter-select hist-find-no-dups yes
+if zplug check zsh-users/zsh-autosuggestions; then
+    bindkey '^M' autosuggest-execute
+    bindkey '^G' autosuggest-clear
+fi
 
 zstyle ':completion:*' rehash true
 
