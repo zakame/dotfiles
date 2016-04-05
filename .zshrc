@@ -36,7 +36,7 @@ zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 
-zplug "junegunn/fzf-bin", as:command, from:gh-r, of:"*linux_amd64*", file:fzf
+zplug "junegunn/fzf-bin", as:command, from:gh-r, of:"*linux*amd64*", file:fzf
 zplug "junegunn/fzf", as:command, of:"bin/fzf-tmux", file:fzf-tmux
 zplug "junegunn/fzf", of:"shell/*.zsh"
 
