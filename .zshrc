@@ -63,6 +63,8 @@ fi
 
 zplug load
 
+FZF_DEFAULT_OPTS="--multi --reverse --inline-info"
+
 bindkey -M emacs '^P' history-substring-search-up
 bindkey -M emacs '^N' history-substring-search-down
 
