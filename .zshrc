@@ -40,7 +40,7 @@ zplug "junegunn/fzf-bin", as:command, from:gh-r, of:"*linux*amd64*", file:fzf
 zplug "junegunn/fzf", as:command, of:"bin/fzf-tmux", file:fzf-tmux
 zplug "junegunn/fzf", of:"shell/*.zsh"
 
-zplug "nojhan/liquidprompt", at:develop
+zplug "nojhan/liquidprompt"
 
 zplug "lib/misc", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug "lib/termsupport", from:oh-my-zsh, ignore:oh-my-zsh.sh
