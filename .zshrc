@@ -25,20 +25,20 @@ select-word-style bash
 
 # Set up zplug
 [[ -d ~/.zplug ]] || {
-    curl -fLo ~/.zplug/zplug --create-dirs https://git.io/zplug
-    source ~/.zplug/zplug && zplug update --self
+    git clone --depth 1 https://github.com/b4b4r07/zplug.git ~/.zplug
+    source ~/.zplug/init.zsh && zplug update --self
 }
 
-source ~/.zplug/zplug
+source ~/.zplug/init.zsh
 
 zplug "zsh-users/zsh-syntax-highlighting"
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions"
 
-zplug "junegunn/fzf-bin", as:command, from:gh-r, of:"*linux*amd64*", file:fzf
-zplug "junegunn/fzf", as:command, of:"bin/fzf-tmux", file:fzf-tmux
-zplug "junegunn/fzf", of:"shell/*.zsh"
+zplug "junegunn/fzf-bin", as:command, from:gh-r, use:"*linux*amd64*", rename-to:fzf
+zplug "junegunn/fzf", as:command, use:"bin/fzf-tmux", rename-to:fzf-tmux
+zplug "junegunn/fzf", use:"shell/*.zsh"
 
 zplug "nojhan/liquidprompt"
 
