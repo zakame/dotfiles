@@ -46,7 +46,7 @@ zplug "lib/misc", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug "lib/termsupport", from:oh-my-zsh, ignore:oh-my-zsh.sh
 zplug "lib/theme-and-appearance", from:oh-my-zsh, ignore:oh-my-zsh.sh
 
-zplug "b4b4r07/zplug"
+zplug "zplug/zplug"
 
 if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zshrc.local
