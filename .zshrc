@@ -25,7 +25,7 @@ select-word-style bash
 
 # Set up zplug
 [[ -d ~/.zplug ]] || {
-    git clone --depth 1 https://github.com/b4b4r07/zplug.git ~/.zplug
+    curl -sL get.zplug.sh | zsh
     source ~/.zplug/init.zsh && zplug update --self
 }
 
