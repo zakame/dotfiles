@@ -83,7 +83,7 @@ setopt completealiases
 setopt histignoredups sharehistory
 
 function dta() {
-    wget -O - $1 | grep -Eo 'i.4cdn.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
+    wget -O - $1 | grep -Eo 'is.4chan.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
 }
 
 if [ -d $HOME/bin ]; then
