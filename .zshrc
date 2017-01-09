@@ -42,9 +42,9 @@ zplug "junegunn/fzf", use:"shell/*.zsh"
 
 zplug "nojhan/liquidprompt"
 
-zplug "lib/misc", from:oh-my-zsh, ignore:oh-my-zsh.sh
-zplug "lib/termsupport", from:oh-my-zsh, ignore:oh-my-zsh.sh
-zplug "lib/theme-and-appearance", from:oh-my-zsh, ignore:oh-my-zsh.sh
+zplug "lib/misc", from:oh-my-zsh
+zplug "lib/termsupport", from:oh-my-zsh
+zplug "lib/theme-and-appearance", from:oh-my-zsh
 
 zplug "zplug/zplug"
 
