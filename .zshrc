@@ -31,10 +31,10 @@ select-word-style bash
 
 source ~/.zplug/init.zsh
 
-zplug "zsh-users/zsh-syntax-highlighting"
-zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-autosuggestions", defer:2
 
 zplug "junegunn/fzf-bin", as:command, from:gh-r, use:"*linux*amd64*", rename-to:fzf
 zplug "junegunn/fzf", as:command, use:"bin/fzf-tmux", rename-to:fzf-tmux
