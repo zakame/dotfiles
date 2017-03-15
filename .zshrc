@@ -46,7 +46,7 @@ zplug "lib/misc", from:oh-my-zsh
 zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/theme-and-appearance", from:oh-my-zsh
 
-zplug "zplug/zplug"
+zplug "zplug/zplug", hook-build:'zplug --self-manage'
 
 if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zshrc.local
