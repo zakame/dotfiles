@@ -38,7 +38,7 @@ zplug "zsh-users/zsh-autosuggestions", defer:2
 
 zplug "junegunn/fzf-bin", as:command, from:gh-r, use:"*linux*amd64*", rename-to:fzf
 zplug "junegunn/fzf", as:command, use:"bin/fzf-tmux", rename-to:fzf-tmux
-zplug "junegunn/fzf", use:"shell/*.zsh"
+zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
 
 zplug "nojhan/liquidprompt"
 
