@@ -18,6 +18,15 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+ALTERNATE_EDITOR=""
+VISUAL="emacsclient"
+alias ec="$VISUAL -c"
+alias e=$VISUAL
+
+LESS="-R"
+
+export LESS ALTERNATE_EDITOR VISUAL
+
 ttyctl -f
 
 autoload -U select-word-style
