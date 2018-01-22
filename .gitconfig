@@ -7,3 +7,9 @@
 	ui = auto
 [merge]
         conflictStyle = diff3
+[diff]
+        algorithm = minimal
+        compactionHeuristic = true
+        indentHeuristic = true
+[core]
+	autocrlf = input
