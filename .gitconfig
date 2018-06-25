@@ -13,3 +13,5 @@
         indentHeuristic = true
 [core]
 	autocrlf = input
+[rerere]
+	enabled = true
