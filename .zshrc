@@ -34,7 +34,7 @@ select-word-style bash
 
 # Set up zplug
 [[ -d ~/.zplug ]] || {
-    git clone https://github.com/39e/zplug.git ~/.zplug
+    git clone https://github.com/zplug/zplug.git ~/.zplug
     source ~/.zplug/init.zsh
 }
 
@@ -59,7 +59,7 @@ if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
 
-zplug "39e/zplug", hook-build:"zplug --self-manage"
+zplug "zplug/zplug", hook-build:"zplug --self-manage"
 
 if ! zplug check --verbose; then
     printf "Install? [y/N]: "
