@@ -35,7 +35,6 @@ select-word-style bash
 # Set up zplug
 [[ -d ~/.zplug ]] || {
     git clone https://github.com/zplug/zplug.git ~/.zplug
-    source ~/.zplug/init.zsh
 }
 
 source ~/.zplug/init.zsh
