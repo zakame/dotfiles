@@ -6,4 +6,4 @@ if [ -f $HOME/.zshenv.local ]; then
     source $HOME/.zshenv.local
 fi
 
-typeset -U path
+typeset -U PATH path

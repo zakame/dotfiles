@@ -10,4 +10,4 @@ if [ -d $HOME/bin ]; then
     PATH=$HOME/bin:$PATH
 fi
 
-typeset -U path
+typeset -U PATH path
