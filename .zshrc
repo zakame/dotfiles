@@ -54,6 +54,14 @@ zplug "lib/misc", from:oh-my-zsh
 zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/theme-and-appearance", from:oh-my-zsh
 
+zplug "plugins/cargo", from:oh-my-zsh
+zplug "plugins/colored-man-pages", from:oh-my-zsh
+zplug "plugins/emacs", from:oh-my-zsh
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/golang", from:oh-my-zsh
+zplug "plugins/perl", from:oh-my-zsh
+zplug "plugins/rust", from:oh-my-zsh
+
 if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
