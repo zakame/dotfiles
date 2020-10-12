@@ -90,9 +90,9 @@ zstyle ':completion:*' rehash true
 setopt completealiases
 setopt histignoredups sharehistory histignorespace
 
-function dta() {
-    wget -O - $1 | grep -Eo 'is.4chan.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
-}
+# function dta() {
+#     wget -O - $1 | grep -Eo 'is.4chan.org/[^"]+' | uniq | grep -v 's.jpg' | xargs wget -c
+# }
 
 if [ -d $HOME/bin ]; then
     PATH=$HOME/bin:$PATH
