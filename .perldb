@@ -93,6 +93,7 @@ package My::Debugger::Helper {
         # any filenames.
         local @ARGV;
         my $error = Perl::Tidy::perltidy(
+            argv        => '-npro',
             source      => \$output,
             destination => \$tidied,
             stderr      => \$stderr,
