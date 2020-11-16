@@ -44,9 +44,7 @@ zplug "zsh-users/zsh-history-substring-search", defer:2
 zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions", defer:2
 
-zplug "junegunn/fzf-bin", as:command, from:gh-r, use:"*linux*amd64*", rename-to:fzf
-zplug "junegunn/fzf", as:command, use:"bin/fzf-tmux", rename-to:fzf-tmux
-zplug "junegunn/fzf", use:"shell/*.zsh", defer:2
+zplug "junegunn/fzf", hook-build:"./install --bin", use:"shell/*.zsh", defer:2
 
 zplug "nojhan/liquidprompt"
 
@@ -79,8 +77,9 @@ fi
 
 zplug load
 
-if zplug check junegunn/fzf-bin; then
+if zplug check junegunn/fzf; then
     FZF_DEFAULT_OPTS="--multi --reverse --inline-info"
+    PATH=$HOME/.zplug/repos/junegunn/fzf/bin:$PATH
 fi
 
 if zplug check zsh-users/zsh-history-substring-search; then
