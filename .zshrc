@@ -77,6 +77,16 @@ fi
 
 zplug load
 
+if zplug check nojhan/liquidprompt; then
+  # TODO: Also check on Linux kitty or alacritty
+  if [[ "$TERM_PROGRAM" = "iTerm.app" ]]; then
+    source ~/.zplug/repos/nojhan/liquidprompt/themes/powerline/powerline.theme
+    lp_theme powerline
+  elif [[ "$TERM_PROGRAM" = "vscode" ]]; then
+    prompt_OFF
+  fi
+fi
+
 if zplug check junegunn/fzf; then
     FZF_DEFAULT_OPTS="--multi --reverse --inline-info"
     PATH=$HOME/.zplug/repos/junegunn/fzf/bin:$PATH
