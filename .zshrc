@@ -78,8 +78,7 @@ fi
 zplug load
 
 if zplug check nojhan/liquidprompt; then
-  # TODO: Also check on Linux kitty or alacritty
-  if [[ "$TERM_PROGRAM" = "iTerm.app" ]]; then
+  if [[ "$TERM_PROGRAM" = "iTerm.app" || "$TERM" = "xterm-kitty" ]]; then
     source ~/.zplug/repos/nojhan/liquidprompt/themes/powerline/powerline.theme
     lp_theme powerline
   elif [[ "$TERM_PROGRAM" = "vscode" ]]; then
