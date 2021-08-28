@@ -59,6 +59,7 @@ zplug "plugins/emacs", from:oh-my-zsh
 zplug "plugins/git", from:oh-my-zsh
 zplug "plugins/golang", from:oh-my-zsh
 zplug "plugins/perl", from:oh-my-zsh
+zplug "plugins/ripgrep", from:oh-my-zsh
 zplug "plugins/rust", from:oh-my-zsh
 
 if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
