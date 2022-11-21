@@ -45,7 +45,6 @@ zplug "zsh-users/zsh-completions"
 zplug "zsh-users/zsh-autosuggestions", defer:2
 
 zplug "junegunn/fzf", hook-build:"./install --bin", use:"shell/*.zsh", defer:2
-zplug "BurntSushi/ripgrep", as:command, from:gh-r, rename-to:rg, defer:2
 
 zplug "nojhan/liquidprompt"
 
