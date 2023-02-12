@@ -4,19 +4,6 @@ HISTSIZE=10000
 SAVEHIST=10000
 setopt appendhistory autocd beep extendedglob nomatch notify
 bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-
-zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
-zstyle ':completion:*' menu select=1
-zstyle ':completion:*' use-compctl true
-zstyle :compinstall filename ${ZDOTDIR:-$HOME}/.zshrc
-
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
 
 ALTERNATE_EDITOR=""
 VISUAL="emacsclient"
@@ -48,6 +35,7 @@ zplug "junegunn/fzf", hook-build:"./install --bin", use:"shell/*.zsh", defer:2
 
 zplug "nojhan/liquidprompt"
 
+zplug "lib/completion", from:oh-my-zsh
 zplug "lib/misc", from:oh-my-zsh
 zplug "lib/termsupport", from:oh-my-zsh
 zplug "lib/theme-and-appearance", from:oh-my-zsh
@@ -78,6 +66,9 @@ fi
 
 zplug load
 
+mkdir -p $ZSH/cache/completions
+fpath=($ZSH/cache/completions $fpath)
+
 if zplug check nojhan/liquidprompt; then
   if [[ "$LC_TERMINAL" == "iTerm2" || "$TERM" == "xterm-kitty" ]]; then
     source ~/.zplug/repos/nojhan/liquidprompt/themes/powerline/powerline.theme
@@ -101,6 +92,20 @@ if zplug check zsh-users/zsh-autosuggestions; then
     bindkey '^M' autosuggest-execute
     bindkey '^G' autosuggest-clear
 fi
+
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _ignored _correct _approximate
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=** r:|=**' 'l:|=* r:|=*'
+zstyle ':completion:*' menu select=1
+zstyle ':completion:*' use-compctl true
+zstyle :compinstall filename ${ZDOTDIR:-$HOME}/.zshrc
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
 
 zstyle ':completion:*' rehash true
 
