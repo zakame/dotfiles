@@ -90,6 +90,7 @@ fi
 
 if zplug check zsh-users/zsh-autosuggestions; then
     bindkey '^M' autosuggest-execute
+    bindkey '^J' autosuggest-execute
     bindkey '^G' autosuggest-clear
 fi
 
@@ -121,3 +122,7 @@ if [ -d $HOME/bin ]; then
 fi
 
 typeset -U PATH path
+
+if [ -e $HOME/.emacs.d/emacs-vterm.zsh ]; then
+  source $HOME/.emacs.d/emacs-vterm.zsh
+fi
