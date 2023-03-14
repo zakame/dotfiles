@@ -74,7 +74,7 @@ if zplug check nojhan/liquidprompt; then
   if [[ "$LC_TERMINAL" == "iTerm2" || "$TERM" == "xterm-kitty" || "$TERM_PROGRAM" == "vscode" ]]; then
     source ~/.zplug/repos/nojhan/liquidprompt/themes/powerline/powerline.theme
     lp_theme powerline
-  elif [[ "$INSIDE_EMACS" == "vterm" ]]; then
+  elif [[ "$INSIDE_EMACS" == "vterm" || "$TERM" == "xterm-256color" ]]; then
     lp_theme default
   else
     prompt_OFF
