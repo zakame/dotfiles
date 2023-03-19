@@ -1,0 +1,11 @@
+Host github.com
+    User git
+
+Host *
+
+Compression yes
+ControlMaster auto
+ControlPath ~/.ssh/controlmasters/%C
+ControlPersist no
+ServerAliveInterval 30
+ForwardAgent yes
