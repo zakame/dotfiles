@@ -36,6 +36,7 @@ zplug "junegunn/fzf", hook-build:"./install --bin", use:"shell/*.zsh", defer:2
 zplug "nojhan/liquidprompt"
 
 zplug "lib/completion", from:oh-my-zsh
+zplug "lib/functions", from:oh-my-zsh
 zplug "lib/key-bindings", from:oh-my-zsh
 zplug "lib/misc", from:oh-my-zsh
 zplug "lib/termsupport", from:oh-my-zsh
