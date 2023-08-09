@@ -69,8 +69,9 @@ fi
 
 zplug load
 
-mkdir -p $ZSH/cache/completions
-fpath=($ZSH/cache/completions $fpath)
+# $ZSH points to zplug's omz install
+mkdir -p $ZSH/cache/completions $HOME/.zsh/completions
+fpath=($ZSH/cache/completions $HOME/.zsh/completions $fpath)
 
 if zplug check nojhan/liquidprompt; then
   if [[ "$LC_TERMINAL" == "iTerm2" || "$TERM" == "xterm-kitty" || "$TERM" == "rxvt-unicode" || "$TERM_PROGRAM" == "vscode" ]]; then
