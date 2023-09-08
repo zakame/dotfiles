@@ -52,6 +52,10 @@ zplug "plugins/kubectl", from:oh-my-zsh
 zplug "plugins/perl", from:oh-my-zsh
 zplug "plugins/ripgrep", from:oh-my-zsh
 
+zstyle ':omz:plugins:docker' legacy-completion yes
+zstyle ':completion:*:*:docker:*' option-stacking yes
+zstyle ':completion:*:*:docker-*:*' option-stacking yes
+
 if [ -e ${ZDOTDIR:-$HOME}/.zshrc.local ]; then
     source ${ZDOTDIR:-$HOME}/.zshrc.local
 fi
